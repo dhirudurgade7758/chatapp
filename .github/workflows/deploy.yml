@@ -10,6 +10,6 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build and push Docker Image
         run: |
-          docker login ghcr.io --username dhirajdurgade7758 --password ${{ secrets.MY_PAT }}
-          docker build . -t ghcr.io/dhirajdurgade7758/chat-app-image
-          docker push ghcr.io/dhirajdurgade7758/chat-app-image
+          docker login ghcr.io --username dhirudurgade7758 --password ${{ secrets.MY_PAT }}
+          docker build . -t ghcr.io/dhirudurgade7758/chat-app-image
+          docker push ghcr.io/dhirudurgade7758/chat-app-image
