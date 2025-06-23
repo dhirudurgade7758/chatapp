@@ -3,9 +3,12 @@ services:
 
   web:
       build: .
+      image: chat-app-image
       command: >
         sh -c "
         python manage.py collectstatic --noinput &&
+        python manage.py makemigrations &&
+        python manage.py migrate &&
         daphne -b 0.0.0.0 -p 8000 a_core.asgi:application
         "
       volumes:
@@ -13,7 +16,7 @@ services:
       ports:
         - "8000:8000"
       env_file:
-        - .env
+        - ./a_core/.env
       depends_on:
         - db
         - redis
@@ -28,6 +31,8 @@ services:
         POSTGRES_PASSWORD: postgres
         POSTGRES_DB: postgres
     restart: unless-stopped
+    env_file:
+       - ./a_core/.env
     volumes:
         - ./postgres_data:/var/lib/postgresql/data
 
@@ -38,6 +43,8 @@ services:
       - "6379:6379"
     volumes:
       - redis_data:/data
+    env_file:
+      - ./a_core/.env
 
 volumes:
   postgres_data:

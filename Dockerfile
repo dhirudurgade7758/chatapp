@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y \
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+
 # Copy app code
 COPY . .
 
@@ -26,4 +27,4 @@ COPY . .
 EXPOSE 8000
 
 # Run using Daphne (ASGI server for WebSockets support)
-CMD ["daphne", "-b", "0.0.0.0", "-p", "8000", "chatapp.asgi:application"]
+CMD ["daphne", "-b", "0.0.0.0", "-p", "8000", "a_core.asgi:application"]
