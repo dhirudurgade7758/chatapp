@@ -107,14 +107,23 @@ if ENVIRONMENT == 'development':
         }
     }
 else:
+    REDIS_URL = env("REDIS_URL")
     CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [("redis", 6379)],  # ← this must match the service name in docker-compose.yml
+        'default': {
+            'BACKEND': 'channels_redis.core.RedisChannelLayer',
+            'CONFIG': {
+                "hosts": [REDIS_URL],
+            },
         },
-    },
-}
+    }
+#     CHANNEL_LAYERS = {
+#     'default': {
+#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
+#         'CONFIG': {
+#             "hosts": [("redis", 6379)],  # ← this must match the service name in docker-compose.yml
+#         },
+#     },
+# }
 
 
 # Database
@@ -129,16 +138,19 @@ if ENVIRONMENT == 'development':
     }
 else:
     DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('POSTGRES_DB', default='postgres'),
-        'USER': env('POSTGRES_USER', default='postgres'),
-        'PASSWORD': env('POSTGRES_PASSWORD', default='postgres'),
-        'HOST': env('POSTGRES_HOST', default='db'),
-        'PORT': env('POSTGRES_PORT', default='5432'),
+        'default': env.db('DATABASE_URL')  # Automatically parses DATABASE_URL
     }
+    # DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': env('POSTGRES_DB', default='postgres'),
+    #     'USER': env('POSTGRES_USER', default='postgres'),
+    #     'PASSWORD': env('POSTGRES_PASSWORD', default='postgres'),
+    #     'HOST': env('POSTGRES_HOST', default='db'),
+    #     'PORT': env('POSTGRES_PORT', default='5432'),
+    # }
+    
 
-}
 
 
 # Password validation
