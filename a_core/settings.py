@@ -138,7 +138,7 @@ if ENVIRONMENT == 'development':
     }
 else:
     DATABASES = {
-        'default': env.db('DATABASE_URL')  # Automatically parses DATABASE_URL
+        'default': env.db(),  # This reads DATABASE_URL from your env vars
     }
     # DATABASES = {
     # 'default': {
